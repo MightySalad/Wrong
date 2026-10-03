@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home - Wrong PH</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:Arial,Helvetica,sans-serif}
+body{background:#fff;color:#111}
+a{color:inherit;text-decoration:none}
+
+/* UTILITY BAR (top gray strip like nike.com) */
+.utility{background:#f5f5f5;height:36px;display:flex;align-items:center;justify-content:space-between;padding:0 50px;font-size:12px;font-weight:bold}
+.utility div{display:flex;gap:16px;align-items:center}
+.utility a:hover{color:#707072}
+.utility .sep{width:1px;height:14px;background:#111}
+
+/* HEADER */
+header{height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 50px;background:#fff;position:sticky;top:0;z-index:20;border-bottom:1px solid #eee}
+.brand-logo{width:70px;height:auto;display:block}
+.navigation{display:flex;gap:30px;position:absolute;left:50%;transform:translateX(-50%)}
+.navigation a{font-size:16px;font-weight:bold;padding:20px 0;border-bottom:2px solid transparent}
+.navigation a:hover{border-bottom-color:#111}
+.header-actions{display:flex;align-items:center;gap:12px}
+.search{display:flex;align-items:center;gap:8px;background:#f5f5f5;border-radius:30px;padding:0 14px;height:40px}
+.search:hover{background:#e5e5e5}
+.search input{border:0;background:transparent;outline:0;font-size:14px;width:120px}
+.icon-btn{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative}
+.icon-btn:hover{background:#e5e5e5}
+.icon-btn svg{width:24px;height:24px;fill:none;stroke:#111;stroke-width:1.8}
+.badge-count{position:absolute;top:4px;right:2px;background:#111;color:#fff;font-size:10px;font-weight:bold;min-width:16px;height:16px;border-radius:8px;display:flex;align-items:center;justify-content:center}
+.profile-button{background:#111;color:#fff!important;padding:10px 18px;border-radius:25px;font-size:14px;font-weight:bold}
+.profile-button:hover{background:#333}
+
+/* PROMO BANNER */
+.promo{background:#f5f5f5;text-align:center;padding:14px 20px;border-top:1px solid #e5e5e5}
+.promo strong{display:block;font-size:14px}
+.promo span{font-size:12px;color:#444}
+.promo a{text-decoration:underline;font-weight:bold}
+
+/* HERO */
+.hero{position:relative;width:100%;height:calc(100vh - 160px);min-height:520px;overflow:hidden;background:#111}
+.slide{position:absolute;inset:0;opacity:0;transition:opacity .7s ease;pointer-events:none}
+.slide.active{opacity:1;pointer-events:auto}
+.slide img{width:100%;height:100%;object-fit:cover;display:block}
+.slide::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.28)}
+.hero-content{position:absolute;z-index:3;left:5%;bottom:12%;color:#fff;max-width:600px}
+.hero-content small{display:block;font-size:16px;font-weight:bold;margin-bottom:10px}
+.hero-content h1{font-size:clamp(45px,7vw,90px);line-height:.9;font-weight:900;letter-spacing:-4px;margin-bottom:20px;text-transform:uppercase}
+.hero-content p{font-size:16px;line-height:1.5;margin-bottom:26px;max-width:480px}
+.shop-button{display:inline-block;background:#fff;color:#111;padding:14px 26px;border-radius:30px;font-size:14px;font-weight:bold;transition:.2s}
+.shop-button:hover{background:#ddd;color:#111}
+.slider-button{position:absolute;z-index:5;bottom:30px;width:44px;height:44px;border-radius:50%;border:0;background:rgba(255,255,255,.9);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.slider-button:hover{background:#fff}
+.previous{right:84px}.next{right:30px}
+.slider-dots{position:absolute;z-index:5;bottom:48px;left:5%;display:flex;gap:8px}
+.dot{width:9px;height:9px;border-radius:50%;border:0;background:rgba(255,255,255,.5);cursor:pointer;padding:0}
+.dot.active{background:#fff}
+
+/* SECTIONS */
+.section{padding:50px 50px 10px}
+.section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.section-head h2{font-size:22px;font-weight:500}
+.arrows{display:flex;gap:8px}
+.arrows button{width:40px;height:40px;border-radius:50%;border:0;background:#e5e5e5;cursor:pointer;font-size:14px}
+.arrows button:hover{background:#ccc}
+
+/* HORIZONTAL PRODUCT ROW */
+.row-scroll{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+.row-scroll::-webkit-scrollbar{display:none}
+.product{flex:0 0 calc(25% - 9px);min-width:260px;scroll-snap-align:start}
+.product .img{aspect-ratio:1/1;background:#f5f5f5;overflow:hidden;position:relative}
+.product img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
+.product:hover img{transform:scale(1.03)}
+.product .fav{position:absolute;top:10px;right:10px;width:36px;height:36px;border-radius:50%;background:#fff;border:0;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.product .fav svg{width:18px;height:18px;fill:none;stroke:#111;stroke-width:2}
+.product .fav.on svg{fill:#111}
+.product .info{padding-top:10px}
+.product .tag{color:#9e3500;font-size:14px}
+.product .name{font-size:16px;font-weight:500}
+.product .cat{font-size:15px;color:#707072}
+.product .price{font-size:15px;margin-top:8px;font-weight:500}
+
+/* FEATURED TILES */
+.tiles{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.tile{position:relative;aspect-ratio:4/5;background:#111;overflow:hidden;color:#fff}
+.tile img{width:100%;height:100%;object-fit:cover;display:block}
+.tile::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 50%,rgba(0,0,0,.45))}
+.tile div{position:absolute;z-index:2;left:24px;bottom:28px}
+.tile h3{font-size:clamp(26px,3vw,40px);font-weight:900;text-transform:uppercase;letter-spacing:-1px;margin-bottom:14px}
+
+/* SHOP BY SPORT */
+.sports{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.sport{position:relative;aspect-ratio:3/4;background:#222;overflow:hidden}
+.sport img{width:100%;height:100%;object-fit:cover;display:block}
+.sport span{position:absolute;left:14px;bottom:14px;background:#fff;padding:8px 18px;border-radius:30px;font-size:14px;font-weight:bold}
+
+/* MEMBER CALLOUT */
+.callout{margin:50px;background:#f5f5f5;padding:60px 30px;text-align:center}
+.callout h2{font-size:clamp(30px,5vw,56px);font-weight:900;text-transform:uppercase;letter-spacing:-2px;line-height:1;margin-bottom:14px}
+.callout p{max-width:520px;margin:0 auto 24px;color:#444}
+.callout .shop-button{background:#111;color:#fff}
+.callout .shop-button:hover{background:#333;color:#fff}
+
+/* FOOTER */
+footer{background:#111;color:#fff;padding:50px 50px 24px;font-size:12px}
+.foot-cols{display:grid;grid-template-columns:repeat(4,1fr);gap:30px;padding-bottom:30px;border-bottom:1px solid #333;margin-bottom:20px}
+.foot-cols h4{font-size:12px;margin-bottom:14px;text-transform:uppercase}
+.foot-cols a{display:block;color:#aaa;margin-bottom:10px}
+.foot-cols a:hover{color:#fff}
+.foot-bottom{display:flex;justify-content:space-between;color:#aaa;flex-wrap:wrap;gap:10px}
+.foot-bottom a{margin-left:20px;color:#fff}
+
+@media(max-width:900px){
+  .utility,header,.section{padding-left:24px;padding-right:24px}
+  .navigation,.search,.utility div:first-child{display:none}
+  .sports{grid-template-columns:repeat(2,1fr)}
+  .callout{margin:30px 24px}
+  .foot-cols{grid-template-columns:repeat(2,1fr)}
+  footer{padding:40px 24px 20px}
+}
+@media(max-width:600px){
+  .tiles{grid-template-columns:1fr}
+  .hero-content{right:5%}
+  .hero-content h1{font-size:52px;letter-spacing:-3px}
+  .product{flex-basis:70%}
+  .profile-button{padding:8px 14px;font-size:12px}
+  .slider-button{display:none}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<!-- UTILITY BAR -->
+<div class="utility">
+  <div><a href="#">Wrong PH</a></div>
+  <div>
+    <a href="#">Find a Store</a><span class="sep"></span>
+    <a href="#">Help</a><span class="sep"></span>
+    <a href="home.html">Hi, Wrong Member</a>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header>
+  <a href="home.html" class="brand"><img src="Nike Logo.png" alt="Wrong Logo" class="brand-logo"></a>
+
+  <nav class="navigation">
+    <a href="#new">New &amp; Featured</a>
+    <a href="#men">Men</a>
+    <a href="#women">Women</a>
+    <a href="#kids">Kids</a>
+    <a href="#sale">Sale</a>
+  </nav>
+
+  <div class="header-actions">
+    <label class="search">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+      <input type="search" placeholder="Search" aria-label="Search">
+    </label>
+    <a href="#favorites" class="icon-btn" aria-label="Favorites">
+      <svg viewBox="0 0 24 24"><path d="M12 21s-8-5.2-8-11a4.5 4.5 0 018-2.8A4.5 4.5 0 0120 10c0 5.8-8 11-8 11z"/></svg>
+    </a>
+    <a href="#cart" class="icon-btn" aria-label="Bag">
+      <svg viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6a3 3 0 016 0v2"/></svg>
+      <span class="badge-count" id="bagCount">0</span>
+    </a>
+    <a href="profile.html" class="profile-button">Profile</a>
+  </div>
+</header>
+
+<!-- PROMO -->
+<div class="promo">
+  <strong>Welcome back, Wrong Member</strong>
+  <span>Free delivery on your orders. <a href="#shop">Shop your next move</a></span>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="slide active">
+    <img src="slide1.jpg" alt="Wrong Collection">
+    <div class="hero-content">
+      <small>Wrong Move</small>
+      <h1>Move<br>Your Way.</h1>
+      <p>Discover the latest Wrong collection designed for movement, comfort, and everyday performance.</p>
+      <a href="#shop" class="shop-button">Shop</a>
+    </div>
+  </div>
+  <div class="slide">
+    <img src="slide2.jpg" alt="Wrong Sports Collection">
+    <div class="hero-content">
+      <small>Wrong Sport</small>
+      <h1>Built<br>To Move.</h1>
+      <p>Performance-inspired styles made for wherever your day takes you.</p>
+      <a href="#shop" class="shop-button">Shop</a>
+    </div>
+  </div>
+  <div class="slide">
+    <img src="slide3.jpg" alt="Wrong Running Collection">
+    <div class="hero-content">
+      <small>Wrong Running</small>
+      <h1>Run<br>Your Way.</h1>
+      <p>Find your pace with Wrong running essentials designed for every stride.</p>
+      <a href="#shop" class="shop-button">Shop</a>
+    </div>
+  </div>
+  <div class="slide">
+    <img src="slide4.jpg" alt="Wrong Lifestyle Collection">
+    <div class="hero-content">
+      <small>Wrong Lifestyle</small>
+      <h1>Everyday<br>Energy.</h1>
+      <p>Everyday essentials with a performance-driven attitude.</p>
+      <a href="#shop" class="shop-button">Shop</a>
+    </div>
+  </div>
+  <div class="slide">
+    <img src="slide5.jpg" alt="Wrong New Collection">
+    <div class="hero-content">
+      <small>Wrong New</small>
+      <h1>Do It<br>Wrong.</h1>
+      <p>Don't follow the ordinary. Create your own way forward.</p>
+      <a href="#shop" class="shop-button">Shop</a>
+    </div>
+  </div>
+
+  <div class="slider-dots">
+    <button class="dot active" onclick="currentSlide(0)" aria-label="Go to slide 1"></button>
+    <button class="dot" onclick="currentSlide(1)" aria-label="Go to slide 2"></button>
+    <button class="dot" onclick="currentSlide(2)" aria-label="Go to slide 3"></button>
+    <button class="dot" onclick="currentSlide(3)" aria-label="Go to slide 4"></button>
+    <button class="dot" onclick="currentSlide(4)" aria-label="Go to slide 5"></button>
+  </div>
+  <button class="slider-button previous" onclick="changeSlide(-1)" aria-label="Previous slide">&#10094;</button>
+  <button class="slider-button next" onclick="changeSlide(1)" aria-label="Next slide">&#10095;</button>
+</section>
+
+<!-- JUST IN (scrolling product row) -->
+<section class="section" id="shop">
+  <div class="section-head">
+    <h2>Just In</h2>
+    <div class="arrows">
+      <button onclick="scrollRow(-1)" aria-label="Scroll left">&#10094;</button>
+      <button onclick="scrollRow(1)" aria-label="Scroll right">&#10095;</button>
+    </div>
+  </div>
+
+  <div class="row-scroll" id="productRow">
+    <!-- Replace image src and text with your real products -->
+    <article class="product">
+      <div class="img"><img src="slide1.jpg" alt="Wrong Runner 1"><button class="fav" aria-label="Favorite"><svg viewBox="0 0 24 24"><path d="M12 21s-8-5.2-8-11a4.5 4.5 0 018-2.8A4.5 4.5 0 0120 10c0 5.8-8 11-8 11z"/></svg></button></div>
+      <div class="info"><div class="tag">Just In</div><div class="name">Wrong Runner 1</div><div class="cat">Men's Road Running Shoes</div><div class="price">₱5,495</div></div>
+    </article>
+    <article class="product">
+      <div class="img"><img src="slide2.jpg" alt="Wrong Court Pro"><button class="fav" aria-label="Favorite"><svg viewBox="0 0 24 24"><path d="M12 21s-8-5.2-8-11a4.5 4.5 0 018-2.8A4.5 4.5 0 0120 10c0 5.8-8 11-8 11z"/></svg></button></div>
+      <div class="info"><div class="tag">Best Seller</div><div class="name">Wrong Court Pro</div><div class="cat">Women's Basketball Shoes</div><div class="price">₱6,295</div></div>
+    </article>
+    <article class="product">
+      <div class="img"><img src="slide3.jpg" alt="Wrong Flex Tee"><button class="fav" aria-label="Favorite"><svg viewBox="0 0 24 24"><path d="M12 21s-8-5.2-8-11a4.5 4.5 0 018-2.8A4.5 4.5 0 0120 10c0 5.8-8 11-8 11z"/></svg></button></div>
+      <div class="info"><div class="tag">Sustainable Materials</div><div class="name">Wrong Flex Tee</div><div class="cat">Men's Training Top</div><div class="price">₱1,495</div></div>
+    </article>
+    <article class="product">
+      <div class="img"><img src="slide4.jpg" alt="Wrong Everyday Jacket"><button class="fav" aria-label="Favorite"><svg viewBox="0 0 24 24"><path d="M12 21s-8-5.2-8-11a4.5 4.5 0 018-2.8A4.5 4.5 0 0120 10c0 5.8-8 11-8 11z"/></svg></button></div>
+      <div class="info"><div class="tag">Just In</div><div class="name">Wrong Everyday Jacket</div><div class="cat">Women's Lifestyle Jacket</div><div class="price">₱3,995</div></div>
+    </article>
+    <article class="product">
+      <div class="img"><img src="slide5.jpg" alt="Wrong Wrong One"><button class="fav" aria-label="Favorite"><svg viewBox="0 0 24 24"><path d="M12 21s-8-5.2-8-11a4.5 4.5 0 018-2.8A4.5 4.5 0 0120 10c0 5.8-8 11-8 11z"/></svg></button></div>
+      <div class="info"><div class="tag">Member Exclusive</div><div class="name">Wrong One</div><div class="cat">Unisex Lifestyle Shoes</div><div class="price">₱4,795</div></div>
+    </article>
+  </div>
+</section>
+
+<!-- FEATURED TILES -->
+<section class="section" id="new">
+  <div class="section-head"><h2>Featured</h2></div>
+  <div class="tiles">
+    <div class="tile">
+      <img src="slide3.jpg" alt="Run collection">
+      <div><h3>Run Season</h3><a href="#shop" class="shop-button">Shop</a></div>
+    </div>
+    <div class="tile">
+      <img src="slide4.jpg" alt="Everyday collection">
+      <div><h3>Everyday Wrong</h3><a href="#shop" class="shop-button">Shop</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- SHOP BY SPORT -->
+<section class="section">
+  <div class="section-head"><h2>Shop by Sport</h2></div>
+  <div class="sports">
+    <a href="#" class="sport"><img src="slide1.jpg" alt="Running"><span>Running</span></a>
+    <a href="#" class="sport"><img src="slide2.jpg" alt="Basketball"><span>Basketball</span></a>
+    <a href="#" class="sport"><img src="slide3.jpg" alt="Training"><span>Training</span></a>
+    <a href="#" class="sport"><img src="slide5.jpg" alt="Lifestyle"><span>Lifestyle</span></a>
+  </div>
+</section>
+
+<!-- MEMBER CALLOUT -->
+<section class="callout">
+  <h2>Wrong, But Right For You.</h2>
+  <p>Explore footwear, apparel, and everyday essentials. Member perks, early access, and free delivery are waiting.</p>
+  <a href="profile.html" class="shop-button">View your profile</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-cols">
+    <div><h4>Resources</h4><a href="#">Find a Store</a><a href="#">Become a Member</a><a href="#">Send Us Feedback</a></div>
+    <div><h4>Help</h4><a href="#">Get Help</a><a href="#">Order Status</a><a href="#">Delivery</a><a href="#">Returns</a></div>
+    <div><h4>Company</h4><a href="#">About Wrong</a><a href="#">News</a><a href="#">Careers</a></div>
+    <div><h4>Location</h4><a href="#">Philippines</a></div>
+  </div>
+  <div class="foot-bottom">
+    <p>&copy; 2026 Wrong, Inc. All Rights Reserved</p>
+    <div><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Contact</a></div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+/* SLIDESHOW */
+let slideIndex = 0;
+const slides = document.querySelectorAll(".slide");
+const dots = document.querySelectorAll(".dot");
+
+function showSlide(index) {
+  slideIndex = (index + slides.length) % slides.length;
+  slides.forEach((s, i) => s.classList.toggle("active", i === slideIndex));
+  dots.forEach((d, i) => d.classList.toggle("active", i === slideIndex));
+}
+function changeSlide(dir) { showSlide(slideIndex + dir); resetTimer(); }
+function currentSlide(i) { showSlide(i); resetTimer(); }
+
+let timer = setInterval(() => showSlide(slideIndex + 1), 5000);
+function resetTimer() { clearInterval(timer); timer = setInterval(() => showSlide(slideIndex + 1), 5000); }
+
+/* PRODUCT ROW ARROWS */
+function scrollRow(dir) {
+  const row = document.getElementById("productRow");
+  row.scrollBy({ left: dir * (row.clientWidth * 0.8), behavior: "smooth" });
+}
+
+/* FAVORITES (heart toggle) + BAG COUNT */
+let favs = 0;
+document.querySelectorAll(".fav").forEach(btn => {
+  btn.addEventListener("click", () => {
+    btn.classList.toggle("on");
+    favs += btn.classList.contains("on") ? 1 : -1;
+    document.getElementById("bagCount").textContent = favs;
+  });
+});
+</script>
+</body>
+</html>
